@@ -1,8 +1,6 @@
 import sqlite3
 import sys
-#provide the path to import utility script
-sys.path.append('''/Users/seemless/Documents/Work/BD/Projects/Util''')
-import xlsx_util
+#a utility script was used "xlsx_util" to build the database. This file is provided to show table structure.
 
 def init_db():
 	print("initializing workforce.db")
@@ -68,10 +66,3 @@ def insert_relationships(path, sheet_name):
 
 if __name__ == "__main__":
 	print("Worforce Database Program Running")
-	#init_db()
-	#query_db("test")
-	path = '''/Users/seemless/Documents/Work/BD/Projects/Cybersecurity Activity Builder/serialization/spreadsheets/'''
-	statements_filename = "nice_abilities.xlsx"
-	statements_sheet_name = "abilities"
-	#insert_relationships(fp, sheet_name)
-	insert_statements(path+statements_filename, statements_sheet_name, "Ability")

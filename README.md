@@ -1,3 +1,7 @@
+This project was created by Seemless Transitions LLC.
+This project is maintained by Connor Murphy and Matthew Smith.
+This project is usable under the Createive Commons Attribution-NonCommercial License.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
