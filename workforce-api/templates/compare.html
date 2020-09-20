@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Workforce Planner</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+  	<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  	<style type="text/css">
+
+  		    .wrapper{
+  		    	width:100%;
+  		    	padding: 10px;
+  		    	margin-top: 10px;
+  		    }
+            .box{
+            	float:left; 
+            	margin-bottom: 10px
+
+            }
+            .box:nth-child(1){
+               width:33%;  
+            }
+            .box:nth-child(2){
+               width:34%;
+            }
+            .box:nth-child(3){
+               width:33%; 
+            }
+  	</style>
+</head>
+<body>
+
+
+    <h1>Work Role Compare</h1>
+    <label for="autocomplete">Select two work roles to compare: </label>
+	<form id="work_role_selector" onSubmit="return checkAnswer();">  
+		<input id=autocompleteText1 type="text" maxlength="100">
+		<input id=autocompleteText2 type="text" maxlength="100">
+		<input type="submit" class="button4" value="Submit" >
+</form>
+	<script>
+		var work_roles = [];
+		$.get("http://127.0.0.1:5000/api/workroles", function(data) {
+			$.each(data, function(i,work_role) {
+				work_roles.push(work_role["id"] + " | " + work_role["title"]);
+			})
+		});
+
+		$( "#autocompleteText1" ).autocomplete({
+		  source: work_roles
+		});
+		$( "#autocompleteText2" ).autocomplete({
+		  source: work_roles
+		});
+		function checkAnswer(){
+		    var wr1 = document.getElementById('autocompleteText1').value;
+		    var wr2 = document.getElementById('autocompleteText2').value;
+		    location = 'http://127.0.0.1:5000/compare/' + wr1.split(" | ")[0] +"/"+ wr2.split(" | ")[0];
+		    return false;
+		}
+	</script>
+	<input id="ksat_filter" type="text" name="ksatFilter" onkeyup="filterList(this)" placeholder="Filter KSATs...">
+	<div id="content" class="wrapper">
+		<div id="header_content_box" class="wrapper">
+			<div id="work_role_1" class="box">
+
+			    <p><b>Work Role ID:</b> {{ wrs[0]["id"] }}</p>
+			    <p><b>Title:</b> {{ wrs[0]["title"] }}</p>
+			    <p><b>Description:</b> {{ wrs[0]["description"] }}</p>
+
+			</div>
+			<div id="common_elelments" class="box">
+			</div>
+			<div id="work_role_2" class="box">
+
+				<p><b>Work Role ID:</b> {{ wrs[1]["id"] }}</p>
+			    <p><b>Title:</b> {{ wrs[1]["title"] }}</p>
+			    <p><b>Description:</b> {{ wrs[1]["description"] }}</p>
+
+			</div>
+		</div>
+
+		<div id="ksat_content_box" class="wrapper">
+			<div id="first_wr_ksats" class="box">
+				<h2>{{ wrs[0]["id"] }} KSATs</h2>
+				<ul id="first_ksats_list">
+			    {% for item in first_statements %}
+			        <li>{{ item["id"] }} | {{ item["text"]}}</li>
+			    {% endfor %}
+			    </ul>
+			    {# a comment #}
+			</div>
+			<div id="common_ksats" class="box">
+				<h2>Common KSATs</h2>
+				<ul id="common_ksats_list">
+			    {% for item in common_statements %}
+			        <li>{{ item["id"] }} | {{ item["text"]}}</li>
+			    {% endfor %}
+				</ul>
+			</div>
+			<div id="second_wr_ksats" class="box">
+				<h2>{{ wrs[1]["id"] }} KSATs</h2>
+			    <ul id="second_ksats_list">
+			    {% for item in second_statements %}
+			        <li>{{ item["id"] }} | {{ item["text"]}}</li>
+			    {% endfor %}
+			    </ul>
+			</div>
+		</div>
+	</div>
+	<script>
+	function filterList(element) {
+	  // Declare variables
+		var input, filter, ul, li, a, i, txtValue;
+		input = document.getElementById(element.id);
+		filter = input.value.toUpperCase();
+		li = document.getElementsByTagName('li');
+
+		  // Loop through all list items, and hide those who don't match the search query
+		for (i = 0; i < li.length; i++) {
+		    //a = li[i].getElementsByTagName("a")[0];
+		  txtValue = li[i].textContent || li[i].innerText;
+		  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+		    li[i].style.display = "";
+		  } else {
+		    li[i].style.display = "none";
+		  }
+		}
+	}
+	</script>
+</body>
+</html>

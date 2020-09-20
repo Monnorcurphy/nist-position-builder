@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Workforce Planner</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+  	<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+
+
+    <h1>Work Role Viewer</h1>
+    <label for="autocomplete">Select a work role to view: </label>
+	<form id="work_role_selector" onSubmit="return checkAnswer();">  
+		<input id=autocompleteText type="text" maxlength="100">
+		<input type="submit" class="button4" value="Submit" >
+	</form>
+	<script>
+		var work_roles = [];
+		$.get("http://127.0.0.1:5000/api/workroles", function(data) {
+			$.each(data, function(i,work_role) {
+				work_roles.push(work_role["id"] + " | " + work_role["title"]);
+			})
+		});
+
+		$( "#autocompleteText" ).autocomplete({
+		  source: work_roles
+		});
+
+		function checkAnswer(){
+		    var response = document.getElementById('autocompleteText').value;
+		    location = 'http://127.0.0.1:5000/workroles/' + response.split(" | ")[0]
+		    return false;
+		}
+	</script>
+    <p><b>Work Role ID:</b> {{ work_role["id"] }}</p>
+    <p><b>Title:</b> {{ work_role["title"] }}</p>
+    <p><b>Description:</b> {{ work_role["description"] }}</p>
+    <input type="text" class="componentInput" id="whatInput" onkeyup="filterList(this)" placeholder="Filter KSATs...">
+    <h2>KSATs</h2>
+    <ul id="ksats">
+    {% for item in statements %}
+        <li>{{ item["id"] }} | {{ item["text"]}}</li>
+    {% endfor %}
+    </ul>
+    {# a comment #}
+    <script>
+		function filterList(element) {
+		  // Declare variables
+			var input, filter, ul, li, a, i, txtValue;
+			input = document.getElementById(element.id);
+			filter = input.value.toUpperCase();
+			li = document.getElementsByTagName('li');
+
+			  // Loop through all list items, and hide those who don't match the search query
+			for (i = 0; i < li.length; i++) {
+			    //a = li[i].getElementsByTagName("a")[0];
+			  txtValue = li[i].textContent || li[i].innerText;
+			  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+			    li[i].style.display = "";
+			  } else {
+			    li[i].style.display = "none";
+			  }
+			}
+		}
+	</script>
+</body>
+</html>
