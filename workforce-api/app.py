@@ -66,11 +66,11 @@ def get_work_role(work_role_id):
 				"text":statement["text"]}
 		stringifiedStatements.append(res)
 	
-	stringifiedRole = {"id":work_role['id'],
+	results = {"id":work_role['id'],
 				"type":work_role["type"],
 				"title":work_role["title"],
-				"description":work_role["description"]}
-	results = {"work_role":stringifiedRole, "statements": stringifiedStatements}
+				"description":work_role["description"],
+				"statements": stringifiedStatements}
 	return jsonify(results)
 
 @app.route('/api/statement/<statement_id>')

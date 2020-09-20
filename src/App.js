@@ -4,6 +4,7 @@ import WorkRoles from './WorkRoles/workRoles'
 import {BrowserRouter as Router, Switch,Route,Link} from "react-router-dom";
 import {WorkRoleBuilder} from './RoleBuilder/workRoleBuilder'
 import RoleComparison from './RoleComparison/roleComparison'
+import Statements from './KSAT/statements'
 // import Home from './Home/home'
 
 function App() {
@@ -33,12 +34,19 @@ function App() {
           <Route path="/workroles">
             <WorkRoles />
           </Route>
+          <Route path="/workrole">
+            <WorkRoles />
+          </Route>
           <Route path="/rolecomparison">
             <RoleComparison />
           </Route>
           <Route path="/workrolebuilder">
             <WorkRoleBuilder />
           </Route>
+          <Route path="/statements">
+            <Statements />
+          </Route>
+          
           <Route path="/">
             <Home />
           </Route>
