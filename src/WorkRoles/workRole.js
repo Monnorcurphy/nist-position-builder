@@ -1,34 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import {get} from '../shared-functions';
-import './role-styles';
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { get } from "../shared-functions";
+import "./role-styles";
 
-const WorkRole = ({id})=>{
-  const [workRole, getWorkRole] = useState([]);
+const WorkRole = ({ id }) => {
+  const [workRole, getWorkRole] = useState({});
+  const [location, updateParams] = useState(useLocation());
 
   useEffect(() => {
-    get(`/api/workrole/${id}`, getWorkRole)
-  })
+    if (id) {
+      get(`/api/workrole/${id}`, getWorkRole);
+    }
+    let identity = location.pathname.split("/workrole/")[1];
 
-  debugger;
+    get(`/api/workrole/${identity}`, getWorkRole);
+  }, [id, location.pathname]);
+
   return (
     <div className="App">
       <header className="App-header">
-      {workRole? 
-      <div>
-      {workRole.map(role => {
-        return(<div>
-<h2>{role.title}</h2>
-<h4>{role.id}</h4>
-<p>{role.description}</p>
-
-        </div>)
-      })}
-      </div>
-    : null}
-        
+        <div>{workRole.id}</div>
+        <div>{workRole.title}</div>
+        <div>{workRole.description}</div>
+        <div>
+          {workRole.statements
+            ? workRole.statements.map((statement) => (
+                <div>
+                  <div>{statement.id}</div>
+                  <div>{statement.type}</div>
+                  <div>{statement.text}</div>
+                </div>
+              ))
+            : null}
+        </div>
       </header>
     </div>
   );
-}
+};
 
-export default workRole;
+export default WorkRole;

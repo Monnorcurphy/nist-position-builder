@@ -1,10 +1,13 @@
-import React from 'react';
-import './App.css';
-import WorkRoles from './WorkRoles/workRoles'
-import {BrowserRouter as Router, Switch,Route,Link} from "react-router-dom";
-import {WorkRoleBuilder} from './RoleBuilder/workRoleBuilder'
-import RoleComparison from './RoleComparison/roleComparison'
-import Statements from './KSAT/statements'
+import React from "react";
+import "./App.css";
+import WorkRoles from "./WorkRoles/workRoles";
+import WorkRole from "./WorkRoles/workRole";
+
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { WorkRoleBuilder } from "./RoleBuilder/workRoleBuilder";
+import RoleComparison from "./RoleComparison/roleComparison";
+import Statements from "./KSAT/statements";
+import Statement from "./KSAT/statement";
 // import Home from './Home/home'
 
 function App() {
@@ -30,23 +33,45 @@ function App() {
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
+
         <Switch>
-          <Route path="/workroles">
-            <WorkRoles />
-          </Route>
-          <Route path="/workrole">
-            <WorkRoles />
-          </Route>
-          <Route path="/rolecomparison">
-            <RoleComparison />
-          </Route>
-          <Route path="/workrolebuilder">
-            <WorkRoleBuilder />
-          </Route>
-          <Route path="/statements">
-            <Statements />
-          </Route>
-          
+          <Route
+            component={({ match }) => (
+              <div>
+                <Route path="/workroles" component={WorkRoles} />
+                <Route path="/workrole" render={() => <WorkRole />} />
+              </div>
+            )}
+          />
+
+          <Route
+            component={({ match }) => (
+              <div>
+                <Route path="/statements" component={Statements} />
+                <Route
+                  path="/statements/knowledge"
+                  render={() => <Statements type="Knowledge" />}
+                />
+                <Route
+                  path="/statements/skill"
+                  render={() => <Statements type="Skill" />}
+                />
+                <Route
+                  path="/statements/ability"
+                  render={() => <Statements type="Ability" />}
+                />
+                <Route
+                  path="/statements/task"
+                  render={() => <Statements type="Task" />}
+                />
+                <Route path="/statement" render={() => <Statement />} />;
+              </div>
+            )}
+          />
+          <Route path="/workrole" component={WorkRoles} />
+          {/* <Route path="/rolecomparison" component={RoleComparison} />
+          <Route path="/workrolebuilder" component={WorkRoleBuilder} /> */}
+
           <Route path="/">
             <Home />
           </Route>
@@ -56,6 +81,6 @@ function App() {
   );
 }
 
-const Home = () => (<div>Welcome to Seemless Transition</div>)
+const Home = () => <div>Welcome to Seemless Transition</div>;
 
 export default App;

@@ -57,7 +57,10 @@ def get_workroles():
 @app.route('/api/workrole/<work_role_id>')
 def get_work_role(work_role_id):
 	results = []
-	work_role = query_db('''SELECT * from work_roles where id = ?''',args=[work_role_id])[0]
+	work_role = query_db('''SELECT * from work_roles where id = ?''',args=[work_role_id])
+	if len(work_role) > 0:
+		work_role= work_role[0]
+
 	statements = query_db('''SELECT * from statements where id in (SELECT statement_id from relationships where work_role_id=?)''',args=[work_role_id])
 	stringifiedStatements = []
 	for statement in statements:
@@ -71,6 +74,7 @@ def get_work_role(work_role_id):
 				"title":work_role["title"],
 				"description":work_role["description"],
 				"statements": stringifiedStatements}
+	
 	return jsonify(results)
 
 @app.route('/api/statement/<statement_id>')
