@@ -15,7 +15,6 @@ function WorkRoles() {
     get("/api/workroles", getWorkRoles);
   }, []);
 
-  debugger;
   return (
     <div className="App">
       <header className="App-header">

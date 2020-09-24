@@ -19,7 +19,6 @@ const Statement = ({ id }) => {
     get(`/api/statement/${identity}`, getStatement);
   }, [id, location]);
 
-  debugger;
   return (
     <div className="App">
       <header className="App-header">

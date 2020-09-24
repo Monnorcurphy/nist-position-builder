@@ -4,10 +4,12 @@ import WorkRoles from "./WorkRoles/workRoles";
 import WorkRole from "./WorkRoles/workRole";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { WorkRoleBuilder } from "./RoleBuilder/workRoleBuilder";
+import { WorkRoleBuilder } from "./WorkRoles/workRoleBuilder";
 import RoleComparison from "./RoleComparison/roleComparison";
 import Statements from "./KSAT/statements";
 import Statement from "./KSAT/statement";
+import WorkRoleEditor from "./WorkRoles/workRoleEditor";
+import EditRole from "./WorkRoles/editRole";
 // import Home from './Home/home'
 
 function App() {
@@ -28,6 +30,9 @@ function App() {
             <li>
               <Link to="/workrolebuilder">Work Role Builder</Link>
             </li>
+            <li>
+              <Link to="/workroleeditor">Work Role Editor</Link>
+            </li>
           </ul>
         </nav>
 
@@ -40,6 +45,11 @@ function App() {
               <div>
                 <Route path="/workroles" component={WorkRoles} />
                 <Route path="/workrole" render={() => <WorkRole />} />
+                <Route
+                  path="/workroleeditor"
+                  render={() => <WorkRoleEditor />}
+                />
+                <Route path="/editrole" render={() => <EditRole />} />; ;
               </div>
             )}
           />
