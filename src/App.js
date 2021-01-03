@@ -10,7 +10,7 @@ import Statements from "./KSAT/statements";
 import Statement from "./KSAT/statement";
 import WorkRoleEditor from "./WorkRoles/workRoleEditor";
 import EditRole from "./WorkRoles/editRole";
-// import Home from './Home/home'
+import Home from "./Home/home";
 
 function App() {
   return (
@@ -91,6 +91,6 @@ function App() {
   );
 }
 
-const Home = () => <div>Welcome to Seemless Transition</div>;
+// const Home = () => <div>Welcome to Seemless Transition</div>;
 
 export default App;
